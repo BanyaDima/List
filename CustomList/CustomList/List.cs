@@ -12,6 +12,15 @@ namespace CustomList
         private object[] _array;
         private int _capacity = 8;
 
+        public int Count
+        {
+            get
+            {
+                return _array.Length;
+            }
+        }
+
+
         public List()
         {
             InitArray();
@@ -36,11 +45,15 @@ namespace CustomList
             }
         }
 
-        public object this[int key]
+        public object this[int index]
         {
             get
             {
-                return _array[key];
+                return _array[index];
+            }
+            set
+            {
+                _array[index] = value;
             }
         }
 
@@ -112,7 +125,7 @@ namespace CustomList
                     continue;
                 }
 
-                _array[i] = tmpArray[i];                
+                _array[i] = tmpArray[i];
             }
 
             _index--;
