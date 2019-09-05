@@ -83,7 +83,7 @@ namespace CustomList
             }
 
             object[] tmpArray = _array;
-            _array = new object[_capacity];
+            InitArray();
 
             _array[index] = value;
 
@@ -115,7 +115,7 @@ namespace CustomList
             }
 
             object[] tmpArray = _array;
-            _array = new object[_capacity];
+            InitArray();
 
             for (int i = 0, j = 0; i < _index; i++, j++)
             {
@@ -133,7 +133,7 @@ namespace CustomList
         {
             for (int i = 0; i < _array.Length; i++)
             {
-                if (value == _array[i])
+                if (_array[i].Equals(value))
                 {
                     return i;
                 }
@@ -144,6 +144,8 @@ namespace CustomList
         public void Clear()
         {
             InitArray();
+            _index = 0;
+            _capacity = 8;
         }
 
         public bool Conteins(object value)
