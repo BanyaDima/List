@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    class List
+    public class List
     {
         private int _index;
         private object[] _array;
@@ -16,10 +16,9 @@ namespace CustomList
         {
             get
             {
-                return _array.Length;
+                return _index;
             }
         }
-
 
         public List()
         {
@@ -84,11 +83,18 @@ namespace CustomList
             }
 
             object[] tmpArray = _array;
+            _array = new object[_capacity];
+
             _array[index] = value;
 
-            for (int i = index + 1; i < _index; i++)
+            for (int i = 0, j = 0; i < tmpArray.Length; i++)
             {
-                _array[i] = tmpArray[i - 1];
+                if (i == index)
+                {
+                    continue;
+                }
+                _array[i] = tmpArray[j];
+                j++;
             }
         }
 
@@ -108,26 +114,18 @@ namespace CustomList
                 throw new ArgumentException("Unable to insert item at this position!");
             }
 
-            for (int i = 0; i < _array.Length; i++)
-            {
-                if (i == index)
-                {
-                    _array[i] = null;
-                }
-            }
-
             object[] tmpArray = _array;
+            _array = new object[_capacity];
 
-            for (int i = 0; i < _array.Length; i++)
+            for (int i = 0, j = 0; i < _index; i++, j++)
             {
-                if (tmpArray[i] == null)
+                if (j == index)
                 {
-                    continue;
+                    j++;
+
                 }
-
-                _array[i] = tmpArray[i];
+                _array[i] = tmpArray[j];
             }
-
             _index--;
         }
 
@@ -155,9 +153,9 @@ namespace CustomList
 
         public object[] ToArray()
         {
-            object[] copyArray = new object[_array.Length];
+            object[] copyArray = new object[_index];
 
-            for (int i = 0; i < _array.Length; i++)
+            for (int i = 0; i < _index; i++)
             {
                 copyArray[i] = _array[i];
             }
@@ -166,11 +164,11 @@ namespace CustomList
 
         public void Revers()
         {
-            for (int i = 0; i < _array.Length / 2; i++)
+            for (int i = 0; i < _index / 2; i++)
             {
                 object tmp = _array[i];
-                _array[i] = _array[_array.Length - i - 1];
-                _array[_array.Length - i - 1] = tmp;
+                _array[i] = _array[_index - i - 1];
+                _array[_index - i - 1] = tmp;
             }
         }
 
