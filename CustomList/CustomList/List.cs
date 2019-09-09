@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CustomList
 {
-    public class List
+    public class List<T>
     {
         private int _index;
-        private object[] _array;
+        private T[] _array;
         private int _capacity = 8;
 
         public int Count
@@ -27,13 +27,13 @@ namespace CustomList
 
         private void InitArray()
         {
-            _array = new object[_capacity];
+            _array = new T[_capacity];
         }
 
         private void ReInitArray()
         {
-            object[] tmpArray = _array;
-            _array = new object[_capacity];
+            T[] tmpArray = _array;
+            _array = new T[_capacity];
 
             if (tmpArray != null)
             {
@@ -44,7 +44,7 @@ namespace CustomList
             }
         }
 
-        public object this[int index]
+        public T this[int index]
         {
             get
             {
@@ -56,7 +56,7 @@ namespace CustomList
             }
         }
 
-        public void Add(object value)
+        public void Add(T value)
         {
             if (_index == _capacity)
             {
@@ -67,7 +67,7 @@ namespace CustomList
             _index++;
         }
 
-        public void Insert(int index, object value)
+        public void Insert(int index, T value)
         {
             if (index > _index)
             {
@@ -82,7 +82,7 @@ namespace CustomList
                 ReInitArray();
             }
 
-            object[] tmpArray = _array;
+            T[] tmpArray = _array;
             InitArray();
 
             _array[index] = value;
@@ -98,7 +98,7 @@ namespace CustomList
             }
         }
 
-        public void Remove(object value)
+        public void Remove(T value)
         {
             int index = IndexOf(value);
             if (index >= 0)
@@ -114,7 +114,7 @@ namespace CustomList
                 throw new ArgumentException("Unable to insert item at this position!");
             }
 
-            object[] tmpArray = _array;
+            T[] tmpArray = _array;
             InitArray();
 
             for (int i = 0, j = 0; i < _index; i++, j++)
@@ -129,7 +129,7 @@ namespace CustomList
             _index--;
         }
 
-        public int IndexOf(object value)
+        public int IndexOf(T value)
         {
             for (int i = 0; i < _array.Length; i++)
             {
@@ -143,19 +143,19 @@ namespace CustomList
 
         public void Clear()
         {
-            InitArray();
             _index = 0;
             _capacity = 8;
+            InitArray();           
         }
 
-        public bool Conteins(object value)
+        public bool Conteins(T value)
         {
             return IndexOf(value) >= 0;
         }
 
-        public object[] ToArray()
+        public T[] ToArray()
         {
-            object[] copyArray = new object[_index];
+            T[] copyArray = new T[_index];
 
             for (int i = 0; i < _index; i++)
             {
@@ -168,19 +168,10 @@ namespace CustomList
         {
             for (int i = 0; i < _index / 2; i++)
             {
-                object tmp = _array[i];
+                T tmp = _array[i];
                 _array[i] = _array[_index - i - 1];
                 _array[_index - i - 1] = tmp;
             }
         }
-
-
-
-
-
-
-
-
-
     }
 }
